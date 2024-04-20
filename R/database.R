@@ -80,7 +80,7 @@ pieChart <- function(df, label.size = 2.5, color.use = NULL, title = "") {
 #' @importFrom dplyr select
 #' @return
 #' @export
-searchPair <- function(signaling = c(), pairLR.use, key = c("pathway_name","ligand"), matching.exact = FALSE, pair.only = TRUE) {
+searchPair <- function(signaling = c(), pairLR.use, key = c("pathway_name","ligand","receptor.symbol"), matching.exact = FALSE, pair.only = TRUE) {
   key <- match.arg(key)
   pairLR = future.apply::future_sapply(
     X = 1:length(signaling),
@@ -88,7 +88,13 @@ searchPair <- function(signaling = c(), pairLR.use, key = c("pathway_name","liga
       if (!matching.exact) {
         index <- grep(signaling[x], pairLR.use[[key]])
       } else {
-        index <- which(pairLR.use[[key]] %in% signaling[x])
+        if (key != 'receptor.symbol') {
+            index <- which(pairLR.use[[key]] %in% signaling[x])
+        } else {
+            index <- grep(signaling[x], pairLR.use[[key]])
+            receptors <- dplyr::pull(pairLR.use[index, ], key)
+            index <- index[future.apply::future_sapply(receptors, function(y){signaling[x] %in% unlist(strsplit(y, ', '))})]
+        }        
       }
       if (length(index) > 0) {
         if (pair.only) {

@@ -9,6 +9,7 @@ netVisual_chord_gene(
   slot.name = "net",
   color.use = NULL,
   signaling = NULL,
+  signaling.key = "pathway_name",
   pairLR.use = NULL,
   net = NULL,
   sources.use = NULL,
@@ -40,6 +41,8 @@ netVisual_chord_gene(
 \item{color.use}{colors for the cell groups}
 
 \item{signaling}{a character vector giving the name of signaling networks}
+
+\item{signaling.key}{the keyword used to match for the signaling networks, by default pathway_name}
 
 \item{pairLR.use}{a data frame consisting of one column named either "interaction_name" or "pathway_name", defining the interactions of interest}
 

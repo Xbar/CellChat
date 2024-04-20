@@ -7,6 +7,7 @@
 netVisual_chord_cell(
   object,
   signaling = NULL,
+  signaling.key = "pathway_name",
   net = NULL,
   slot.name = "netP",
   color.use = NULL,
@@ -39,6 +40,8 @@ netVisual_chord_cell(
 \item{object}{CellChat object}
 
 \item{signaling}{a character vector giving the name of signaling networks}
+
+\item{signaling.key}{the keyword used to match for the signaling networks, by default pathway_name}
 
 \item{net}{a weighted matrix or a data frame with three columns defining the cell-cell communication network}
 

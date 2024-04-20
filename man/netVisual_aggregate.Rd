@@ -7,6 +7,7 @@
 netVisual_aggregate(
   object,
   signaling,
+  signaling.key = "pathway_name",
   signaling.name = NULL,
   color.use = NULL,
   thresh = 0.05,
@@ -45,6 +46,8 @@ netVisual_aggregate(
 \item{object}{CellChat object}
 
 \item{signaling}{a signaling pathway name}
+
+\item{signaling.key}{the keyword used to match for the signaling networks, by default pathway_name}
 
 \item{signaling.name}{alternative signaling pathway name to show on the plot}
 

@@ -7,7 +7,7 @@
 searchPair(
   signaling = c(),
   pairLR.use,
-  key = c("pathway_name", "ligand"),
+  key = c("pathway_name", "ligand", "receptor.symbol"),
   matching.exact = FALSE,
   pair.only = TRUE
 )

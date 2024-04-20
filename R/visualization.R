@@ -55,6 +55,7 @@ scPalette <- function(n) {
 #'
 #' @param object CellChat object
 #' @param signaling a signaling pathway name
+#' @param signaling.key the keyword used to match for the signaling networks, by default pathway_name
 #' @param signaling.name alternative signaling pathway name to show on the plot
 #' @param color.use the character vector defining the color of each cell group
 #' @param vertex.receiver a numeric vector giving the index of the cell groups as targets in the first hierarchy plot
@@ -113,7 +114,8 @@ scPalette <- function(n) {
 #'
 #' @examples
 #'
-netVisual <- function(object, signaling, signaling.name = NULL, color.use = NULL, vertex.receiver = NULL, sources.use = NULL, targets.use = NULL, top = 1, remove.isolate = FALSE,
+netVisual <- function(object, signaling, signaling.key = 'pathway_name', 
+signaling.name = NULL, color.use = NULL, vertex.receiver = NULL, sources.use = NULL, targets.use = NULL, top = 1, remove.isolate = FALSE,
                       vertex.weight = 1, vertex.weight.max = NULL, vertex.size.max = NULL,
                       weight.scale = TRUE, edge.weight.max.individual = NULL, edge.weight.max.aggregate = NULL, edge.width.max=8,
                       layout = c("circle","hierarchy","chord","spatial"), height = 5, thresh = 0.05, pt.title = 12, title.space = 6, vertex.label.cex = 0.8,from = NULL, to = NULL, bidirection = NULL,vertex.size = NULL,
@@ -135,7 +137,7 @@ netVisual <- function(object, signaling, signaling.name = NULL, color.use = NULL
       vertex.size.max <- 15
     }
   }
-  pairLR <- searchPair(signaling = signaling, pairLR.use = object@LR$LRsig, key = "pathway_name", matching.exact = T, pair.only = F)
+  pairLR <- searchPair(signaling = signaling, pairLR.use = object@LR$LRsig, key = signaling.key, matching.exact = T, pair.only = F)
 
   if (is.null(signaling.name)) {
     signaling.name <- signaling
@@ -456,6 +458,7 @@ netVisual <- function(object, signaling, signaling.name = NULL, color.use = NULL
 #'
 #' @param object CellChat object
 #' @param signaling a signaling pathway name
+#' @param signaling.key the keyword used to match for the signaling networks, by default pathway_name
 #' @param signaling.name alternative signaling pathway name to show on the plot
 #' @param color.use the character vector defining the color of each cell group
 #' @param vertex.receiver a numeric vector giving the index of the cell groups as targets in the first hierarchy plot
@@ -505,7 +508,8 @@ netVisual <- function(object, signaling, signaling.name = NULL, color.use = NULL
 #' @export
 #'
 #'
-netVisual_aggregate <- function(object, signaling, signaling.name = NULL, color.use = NULL, thresh = 0.05, vertex.receiver = NULL, sources.use = NULL, targets.use = NULL, idents.use = NULL, top = 1, remove.isolate = FALSE,
+netVisual_aggregate <- function(object, signaling, signaling.key = 'pathway_name',
+signaling.name = NULL, color.use = NULL, thresh = 0.05, vertex.receiver = NULL, sources.use = NULL, targets.use = NULL, idents.use = NULL, top = 1, remove.isolate = FALSE,
                                 vertex.weight = 1, vertex.weight.max = NULL, vertex.size.max = NULL,
                                 weight.scale = TRUE, edge.weight.max = NULL, edge.width.max=8,
                                 layout = c("circle","hierarchy","chord","spatial"),
@@ -524,7 +528,7 @@ netVisual_aggregate <- function(object, signaling, signaling.name = NULL, color.
       vertex.size.max <- 15
     }
   }
-  pairLR <- searchPair(signaling = signaling, pairLR.use = object@LR$LRsig, key = "pathway_name", matching.exact = T, pair.only = T)
+  pairLR <- searchPair(signaling = signaling, pairLR.use = object@LR$LRsig, key = signaling.key, matching.exact = T, pair.only = T)
 
   if (is.null(signaling.name)) {
     signaling.name <- signaling
@@ -617,6 +621,7 @@ netVisual_aggregate <- function(object, signaling, signaling.name = NULL, color.
 #'
 #' @param object CellChat object
 #' @param signaling a signaling pathway name
+#' @param signaling.key the keyword used to match for the signaling networks, by default pathway_name
 #' @param signaling.name alternative signaling pathway name to show on the plot
 #' @param pairLR.use a char vector or a data frame consisting of one column named "interaction_name", defining the L-R pairs of interest
 #' @param color.use the character vector defining the color of each cell group
@@ -668,7 +673,8 @@ netVisual_aggregate <- function(object, signaling, signaling.name = NULL, color.
 #' @export
 #'
 #'
-netVisual_individual <- function(object, signaling, signaling.name = NULL, pairLR.use = NULL, color.use = NULL, vertex.receiver = NULL, sources.use = NULL, targets.use = NULL, top = 1, remove.isolate = FALSE,
+netVisual_individual <- function(object, signaling, signaling.key = 'pathway_name',
+signaling.name = NULL, pairLR.use = NULL, color.use = NULL, vertex.receiver = NULL, sources.use = NULL, targets.use = NULL, top = 1, remove.isolate = FALSE,
                                  vertex.weight = 1, vertex.weight.max = NULL, vertex.size.max = NULL, vertex.label.cex = 0.8,
                                  weight.scale = TRUE, edge.weight.max = NULL, edge.width.max=8, graphics.init = TRUE,
                                  layout = c("circle","hierarchy","chord","spatial"), height = 5, thresh = 0.05, #from = NULL, to = NULL, bidirection = NULL,vertex.size = NULL,
@@ -690,7 +696,7 @@ netVisual_individual <- function(object, signaling, signaling.name = NULL, pairL
     }
   }
 
-  pairLR <- searchPair(signaling = signaling, pairLR.use = object@LR$LRsig, key = "pathway_name", matching.exact = T, pair.only = F)
+  pairLR <- searchPair(signaling = signaling, pairLR.use = object@LR$LRsig, key = signaling.key, matching.exact = T, pair.only = F)
 
   if (is.null(signaling.name)) {
     signaling.name <- signaling
@@ -2510,6 +2516,7 @@ netVisual_bubble <- function(object, sources.use = NULL, targets.use = NULL, sig
 #'
 #' @param object CellChat object
 #' @param signaling a character vector giving the name of signaling networks
+#' @param signaling.key the keyword used to match for the signaling networks, by default pathway_name
 #' @param net a weighted matrix or a data frame with three columns defining the cell-cell communication network
 #' @param slot.name the slot name of object: slot.name = "net" when visualizing cell-cell communication network per each ligand-receptor pair associated with a given signaling pathway;
 #' slot.name = "netP" when visualizing cell-cell communication network at the level of signaling pathways
@@ -2540,7 +2547,7 @@ netVisual_bubble <- function(object, sources.use = NULL, targets.use = NULL, sig
 #' @return an object of class "recordedplot"
 #' @export
 
-netVisual_chord_cell <- function(object, signaling = NULL, net = NULL, slot.name = "netP",
+netVisual_chord_cell <- function(object, signaling = NULL, signaling.key = 'pathway_name', net = NULL, slot.name = "netP",
                                  color.use = NULL,group = NULL,cell.order = NULL,
                                  sources.use = NULL, targets.use = NULL,
                                  lab.cex = 0.8,small.gap = 1, big.gap = 10, annotationTrackHeight = c(0.03),
@@ -2550,7 +2557,7 @@ netVisual_chord_cell <- function(object, signaling = NULL, net = NULL, slot.name
                                  thresh = 0.05,...){
 
   if (!is.null(signaling)) {
-    pairLR <- searchPair(signaling = signaling, pairLR.use = object@LR$LRsig, key = "pathway_name", matching.exact = T, pair.only = F)
+    pairLR <- searchPair(signaling = signaling, pairLR.use = object@LR$LRsig, key = signaling.key, matching.exact = T, pair.only = F)
     net <- object@net
 
     pairLR.use.name <- dimnames(net$prob)[[3]]
@@ -2801,6 +2808,7 @@ netVisual_chord_cell_internal <- function(net, color.use = NULL, group = NULL, c
 #' @param object CellChat object
 #' @param slot.name the slot name of object: slot.name = "net" when visualizing links at the level of ligands/receptors; slot.name = "netP" when visualizing links at the level of signaling pathways
 #' @param signaling a character vector giving the name of signaling networks
+#' @param signaling.key the keyword used to match for the signaling networks, by default pathway_name
 #' @param pairLR.use a data frame consisting of one column named either "interaction_name" or "pathway_name", defining the interactions of interest
 #' @param net A data frame consisting of the interactions of interest.
 #' net should have at least three columns: "source","target" and "interaction_name" when visualizing links at the level of ligands/receptors;
@@ -2832,7 +2840,7 @@ netVisual_chord_cell_internal <- function(net, color.use = NULL, group = NULL, c
 #' @export
 
 netVisual_chord_gene <- function(object, slot.name = "net", color.use = NULL,
-                                 signaling = NULL, pairLR.use = NULL, net = NULL,
+                                 signaling = NULL, signaling.key = 'pathway_name', pairLR.use = NULL, net = NULL,
                                  sources.use = NULL, targets.use = NULL,
                                  lab.cex = 0.8,small.gap = 1, big.gap = 10, annotationTrackHeight = c(0.03),
                                  link.visible = TRUE, scale = FALSE, directional = 1, link.target.prop = TRUE, reduce = -1,
@@ -2870,7 +2878,7 @@ netVisual_chord_gene <- function(object, slot.name = "net", color.use = NULL,
   if (!is.null(signaling)) {
     pairLR.use <- data.frame()
     for (i in 1:length(signaling)) {
-      pairLR.use.i <- searchPair(signaling = signaling[i], pairLR.use = object@LR$LRsig, key = "pathway_name", matching.exact = T, pair.only = T)
+      pairLR.use.i <- searchPair(signaling = signaling[i], pairLR.use = object@LR$LRsig, key = signaling.key, matching.exact = T, pair.only = T)
       pairLR.use <- rbind(pairLR.use, pairLR.use.i)
     }
   }
